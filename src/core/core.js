@@ -9,10 +9,10 @@
   }
 
   /* @ngInject */
-  function StateEvents($rootScope, $timeout, $state) {
+  function StateEvents($rootScope, $timeout, $state, AnalyticsTrackingService) {
     $rootScope.$on('$stateChangeSuccess', function() {
       $timeout(function() {
-        console.log($state.$current.locals.resolve.$$values);
+        AnalyticsTrackingService.trackPageView($state.current.name);
       });
     });
   }
@@ -20,7 +20,8 @@
   /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
-      validateConfiguration: true
+      validateConfiguration: true,
+      useStateAsPrimaryDataLayer: false
     };
     return factory;
   }

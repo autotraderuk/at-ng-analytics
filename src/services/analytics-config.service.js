@@ -2,7 +2,7 @@
   'use strict';
 
   var analyticsModule = require('../analytics.module');
-  var validator = require('is-my-json-valid')
+  var validator = require('is-my-json-valid');
 
   /* @ngInject */
   function AnalyticsConfigService(AnalyticsProperties) {
@@ -13,7 +13,10 @@
     var service = {
       registerCustomDimensions: registerCustomDimensions,
       registerEvents: registerEvents,
-      registerPages: registerPages
+      registerPages: registerPages,
+      getCustomDimensions: function() {return customDimensions;},
+      getEvents: function() {return events;},
+      getPages: function() {return pages;}
     };
     return service;
 
