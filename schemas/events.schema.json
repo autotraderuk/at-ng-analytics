@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Events Config",
+  "description": "A configuration that describes the global events that may be tracked for analytics.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "category": {
+        "type": "string"
+      },
+      "label": {
+        "type": "string"
+      },
+      "labelDataLayerVar": {
+        "type": "string"
+      },
+      "customDimensions": {
+        "type": "array",
+        "items": {
+          "type": "integer"
+        }
+      }
+    },
+    "required": [
+      "name",
+      "category",
+      "label"
+    ],
+    "additionalProperties": false
+  }
+}

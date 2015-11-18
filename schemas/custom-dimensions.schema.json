@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Custom Dimensions Config",
+  "description": "A configuration that describes the custom dimensions available to analytics tracking.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "oneOf": [
+      {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "dataLayerVar": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "dataLayerVar"
+        ],
+        "additionalProperties": false
+      },
+      {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "value"
+        ],
+        "additionalProperties": false
+      }
+    ]
+  }
+}
