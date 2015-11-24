@@ -1,0 +1,29 @@
+{
+  "name": "at-ng-analytics",
+  "description": "A library for page and event tracking with configurable custom dimensions",
+  "version": "0.0.0",
+  "license": "COMMERCIAL",
+  "repository": {
+    "type": "git",
+    "url": "git@github.atcloud.io:AutoTrader/at-ng-analytics.git"
+  },
+  "scripts": {
+    "build": "mkdirp dist && browserify -t browserify-ngannotate src/index.js -o dist/at-ng-analytics.js"
+  },
+  "main": "src/index.js",
+  "author": "",
+  "publishConfig": {
+    "registry": "http://devnexus001.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/"
+  },
+  "devDependencies": {
+    "angulartics": "^0.20.2",
+    "angulartics-google-analytics": "^0.1.2",
+    "browserify": "^11.0.1",
+    "browserify-ngannotate": "^1.0.1",
+    "is-my-json-valid": "^2.12.3",
+    "mkdirp": "^0.5.1"
+  },
+  "dependencies": {
+    "angular": "1.2.28"
+  }
+}
