@@ -8,6 +8,7 @@
     "url": "git@github.atcloud.io:AutoTrader/at-ng-analytics.git"
   },
   "scripts": {
+    "test": "karma start karma.conf.js",
     "build": "mkdirp dist && browserify -t browserify-ngannotate src/index.js -o dist/at-ng-analytics.js"
   },
   "main": "src/index.js",
@@ -16,10 +17,17 @@
     "registry": "http://devnexus001.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/"
   },
   "devDependencies": {
+    "angular-mocks": "1.2.28",
+    "angular-ui-router": "^0.2.14",
     "angulartics": "^0.20.2",
     "angulartics-google-analytics": "^0.1.2",
     "browserify": "^11.0.1",
     "browserify-ngannotate": "^1.0.1",
+    "karma": "^0.12.32",
+    "karma-browserify": "^4.1.2",
+    "karma-jasmine": "^0.3.5",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "karma-test-tool": "http://nexus.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/karma-test-tool/-/karma-test-tool-1.0.2.tgz",
     "is-my-json-valid": "^2.12.3",
     "mkdirp": "^0.5.1"
   },
