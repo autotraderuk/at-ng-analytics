@@ -33,7 +33,8 @@ module.exports = function (config) {
       // tests
       'src/services/analytics-data-layer.service.spec.js',
       'src/services/analytics-tracking.service.spec.js',
-      'src/services/analytics-config.service.spec.js'
+      'src/services/analytics-config.service.spec.js',
+      'src/directives/event-tracking.directive.spec.js'
     ],
 
     // list of files / patterns to exclude
