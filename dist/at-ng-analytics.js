@@ -1931,13 +1931,32 @@ function extend() {
   angular.module('at.ng.analytics', [
     'angulartics',
     'angulartics.google.analytics',
-    'angulartics.debug'
+    'angulartics.debug',
+    'ui.router'
   ]);
 
   module.exports = angular.module('at.ng.analytics');
 }());
 
 },{}],17:[function(require,module,exports){
+(function() {
+  'use strict';
+
+  var analyticsModule = require('../analytics.module');
+
+  /* @ngInject */
+  function AnalyticsProperties() {
+    var factory = {
+      validateConfiguration: true,
+      useStateAsPrimaryDataLayer: false
+    };
+    return factory;
+  }
+
+  analyticsModule.factory('AnalyticsProperties', AnalyticsProperties);
+}());
+
+},{"../analytics.module":16}],18:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -1959,28 +1978,19 @@ function extend() {
   }
   StateEvents.$inject = ["$rootScope", "$timeout", "$state", "AnalyticsTrackingService"];
 
-  /* @ngInject */
-  function AnalyticsProperties() {
-    var factory = {
-      validateConfiguration: true,
-      useStateAsPrimaryDataLayer: false
-    };
-    return factory;
-  }
-
   analyticsModule.config(DisableDefaultPageTracking);
   analyticsModule.run(StateEvents);
-  analyticsModule.factory('AnalyticsProperties', AnalyticsProperties);
 }());
 
-},{"../analytics.module":16}],18:[function(require,module,exports){
+},{"../analytics.module":16}],19:[function(require,module,exports){
 (function() {
   'use strict';
 
   require('./core');
+  require('./analytics-properties');
 }());
 
-},{"./core":17}],19:[function(require,module,exports){
+},{"./analytics-properties":17,"./core":18}],20:[function(require,module,exports){
 (function() {
   'use strict';
   var analyticsModule = require('../analytics.module');
@@ -2013,14 +2023,14 @@ function extend() {
   module.exports = EventTrackingDirective;
 }());
 
-},{"../analytics.module":16}],20:[function(require,module,exports){
+},{"../analytics.module":16}],21:[function(require,module,exports){
 (function() {
   'use strict';
 
   require('./event-tracking.directive.js');
 }());
 
-},{"./event-tracking.directive.js":19}],21:[function(require,module,exports){
+},{"./event-tracking.directive.js":20}],22:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -2033,7 +2043,7 @@ function extend() {
   require('./analytics.module');
 }());
 
-},{"./analytics.module":16,"./core/":18,"./directives/":20,"./services/":28,"angulartics":4,"angulartics-google-analytics":2,"angulartics/dist/angulartics-debug.min":3}],22:[function(require,module,exports){
+},{"./analytics.module":16,"./core/":19,"./directives/":21,"./services/":29,"angulartics":4,"angulartics-google-analytics":2,"angulartics/dist/angulartics-debug.min":3}],23:[function(require,module,exports){
 module.exports={
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Custom Dimensions Config",
@@ -2084,7 +2094,7 @@ module.exports={
   }
 }
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 module.exports={
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Events Config",
@@ -2121,7 +2131,7 @@ module.exports={
   }
 }
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 module.exports={
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Pages Config",
@@ -2177,14 +2187,13 @@ module.exports={
     },
     "required": [
       "name",
-      "state",
-      "customDimensions"
+      "state"
     ],
     "additionalProperties": false
   }
 }
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -2243,7 +2252,7 @@ module.exports={
   module.exports = AnalyticsConfigService;
 }());
 
-},{"../analytics.module":16,"../schemas/custom-dimensions.schema":22,"../schemas/events.schema":23,"../schemas/pages.schema":24,"is-my-json-valid":10}],26:[function(require,module,exports){
+},{"../analytics.module":16,"../schemas/custom-dimensions.schema":23,"../schemas/events.schema":24,"../schemas/pages.schema":25,"is-my-json-valid":10}],27:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -2275,7 +2284,7 @@ module.exports={
   module.exports = AnalyticsDataLayerService;
 }());
 
-},{"../analytics.module":16}],27:[function(require,module,exports){
+},{"../analytics.module":16}],28:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -2326,7 +2335,7 @@ module.exports={
       var customDimensions = {};
       customDimensionIds.forEach(function(id) {
         var dimension = findDimension(customDimensionsConfig, id);
-        customDimensions[('dimension' + id)] = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar);
+        customDimensions[('dimension' + id)] = (dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar)).toString();
       });
       return customDimensions;
     }
@@ -2334,25 +2343,24 @@ module.exports={
   AnalyticsTrackingService.$inject = ["$analytics", "AnalyticsConfigService", "AnalyticsDataLayerService"];
 
   function findPage(pages, state) {
-    for (var i = 0; i < pages.length; i++) {
-      if (pages[i].state === state) {
-        return pages[i];
-      }
-    }
+    return findConfigItem(pages, 'state', state);
   }
 
   function findDimension(dimensions, id) {
-    for (var i = 0; i < dimensions.length; i++) {
-      if (dimensions[i].id === id) {
-        return dimensions[i];
-      }
-    }
+    return findConfigItem(dimensions, 'id', id);
   }
 
   function findEvent(events, eventLabel) {
-    for (var i = 0; i < events.length; i++) {
-      if (events[i].label === eventLabel) {
-        return events[i];
+    return findConfigItem(events, 'label', eventLabel);
+  }
+
+  function findConfigItem(array, idName, idValue) {
+    if (!array) {
+      return;
+    }
+    for (var i = 0; i < array.length; i++) {
+      if (array[i][idName] === idValue) {
+        return array[i];
       }
     }
   }
@@ -2361,7 +2369,7 @@ module.exports={
   module.exports = AnalyticsTrackingService;
 }());
 
-},{"../analytics.module":16}],28:[function(require,module,exports){
+},{"../analytics.module":16}],29:[function(require,module,exports){
 (function() {
   'use strict';
 
@@ -2370,4 +2378,4 @@ module.exports={
   require('./analytics-tracking.service.js');
 }());
 
-},{"./analytics-config.service.js":25,"./analytics-data-layer.service.js":26,"./analytics-tracking.service.js":27}]},{},[21]);
+},{"./analytics-config.service.js":26,"./analytics-data-layer.service.js":27,"./analytics-tracking.service.js":28}]},{},[22]);
