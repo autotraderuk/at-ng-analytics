@@ -25,6 +25,7 @@ module.exports = function (config) {
 
       // Our functions
       'src/core/core.js',
+      'src/core/analytics-properties.js',
       'src/services/analytics-data-layer.service.js',
       'src/services/analytics-config.service.js',
       'src/services/analytics-tracking.service.js',

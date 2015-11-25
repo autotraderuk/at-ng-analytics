@@ -17,16 +17,6 @@
     });
   }
 
-  /* @ngInject */
-  function AnalyticsProperties() {
-    var factory = {
-      validateConfiguration: true,
-      useStateAsPrimaryDataLayer: false
-    };
-    return factory;
-  }
-
   analyticsModule.config(DisableDefaultPageTracking);
   analyticsModule.run(StateEvents);
-  analyticsModule.factory('AnalyticsProperties', AnalyticsProperties);
 }());
