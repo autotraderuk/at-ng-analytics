@@ -4,7 +4,6 @@
   angular.module('at.ng.analytics', [
     'angulartics',
     'angulartics.google.analytics',
-    'angulartics.debug',
     'ui.router'
   ]);
 

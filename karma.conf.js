@@ -21,7 +21,6 @@ module.exports = function (config) {
       'node_modules/angular-ui-router/release/angular-ui-router.js',
       'node_modules/angulartics/src/angulartics.js',
       'node_modules/angulartics-google-analytics/lib/angulartics-google-analytics.js',
-      'node_modules/angulartics/src/angulartics-debug.js',
 
       // Our functions
       'src/core/core.js',
