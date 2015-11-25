@@ -53,8 +53,7 @@
     },
     "required": [
       "name",
-      "state",
-      "customDimensions"
+      "state"
     ],
     "additionalProperties": false
   }

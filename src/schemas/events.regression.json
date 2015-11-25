@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Event 1",
+    "category": "navigation",
+    "label": "event1"
+  },
+  {
+    "name": "Event 2",
+    "category": "navigation",
+    "label": "event2",
+    "labelDataLayerVar": "eventVar"
+  }
+]

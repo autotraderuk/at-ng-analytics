@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Page 1",
+    "state": "pg1"
+  },
+  {
+    "name": "Page 2",
+    "state": "pg2",
+    "customDimensions": [1, 2]
+  },
+  {
+    "name": "Page 3",
+    "state": "pg3",
+    "events": [
+      {
+        "name": "Event 1",
+        "category": "standard-link",
+        "label": "event1"
+      },
+      {
+        "name": "Event 2",
+        "category": "standard-link",
+        "label": "event2",
+        "labelDataLayerVar": "eventVar"
+      },
+      {
+        "name": "Event 3",
+        "category": "standard-link",
+        "label": "event3",
+        "customDimensions": [3]
+      }
+    ]
+  }
+]

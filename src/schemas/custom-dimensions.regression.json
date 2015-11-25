@@ -1,0 +1,12 @@
+[
+  {
+    "id" : 1,
+    "name" : "Dimension 1",
+    "value" : "value1"
+  },
+  {
+    "id" : 2,
+    "name" : "Dimension 2",
+    "dataLayerVar" : "dimensionVar"
+  }
+]
