@@ -55,25 +55,24 @@
   }
 
   function findPage(pages, state) {
-    for (var i = 0; i < pages.length; i++) {
-      if (pages[i].state === state) {
-        return pages[i];
-      }
-    }
+    return findConfigItem(pages, 'state', state);
   }
 
   function findDimension(dimensions, id) {
-    for (var i = 0; i < dimensions.length; i++) {
-      if (dimensions[i].id === id) {
-        return dimensions[i];
-      }
-    }
+    return findConfigItem(dimensions, 'id', id);
   }
 
   function findEvent(events, eventLabel) {
-    for (var i = 0; i < events.length; i++) {
-      if (events[i].label === eventLabel) {
-        return events[i];
+    return findConfigItem(events, 'label', eventLabel);
+  }
+
+  function findConfigItem(array, idName, idValue) {
+    if (!array) {
+      return;
+    }
+    for (var i = 0; i < array.length; i++) {
+      if (array[i][idName] === idValue) {
+        return array[i];
       }
     }
   }
