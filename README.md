@@ -27,7 +27,7 @@ angular.module('my.app', [
 Setup
 ------------
 
-The library accepts configuration in the form of JSON objects, which should registered using the AnalyticsConfigService.
+The library accepts configuration in the form of JSON objects, which should registered using the `AnalyticsConfigService`.
 
 ```js
 AnalyticsConfigService.registerCustomDimensions(require('./my-custom-dimensions.json'));
@@ -43,7 +43,7 @@ By default the configuration objects are validated against schemas upon registra
 
 [Events](src/schemas/events.schema.json)
 
-You can turn off this validation with the AnalyticsProperties.
+You can turn off this validation with the `AnalyticsProperties`.
 
 ```js
 AnalyticsProperties.validateConfiguration = false;
@@ -110,7 +110,7 @@ The pages config object describes the pages in your application along with any e
 ]
 ```
 
-If your application is using ui-router then page tracking, including custom dimensions, will automatically be sent for each page. The `state` field should match exactly the name given to the ui-router $stateProvider when configuring your states.
+If your application is using `ui-router` then page tracking, including custom dimensions, will automatically be sent for each page. The `state` field should match exactly the name given to the `ui-router` `$stateProvider` when configuring your states.
 
 Event tracking for items on the page will include the custom dimensions configured for the page as well as any configured just for the event e.g. Event 3 will be sent with custom dimensions 1, 2 and 3. The label field for event tracking may be obtained dynamically from the data layer by adding a `labelDataLayerVar` field.
 
@@ -145,7 +145,7 @@ Some events aren't limited to a single page (e.g. menu bar click events) so can 
 Data Layer
 ----------
 
-Values can be put into the the data layer using the AnalyticsDataLayerService.
+Values can be put into the the data layer using the `AnalyticsDataLayerService`.
 
 ```js
 AnalyticsDataLayerService.setVar('dimensionVar', 'dimensionValue');
@@ -164,7 +164,7 @@ The `at-ng-event-tracking` directive will enable click tracking on elements of y
 
 The value given to the directive must match the value of the `label` field for the event in your config.
 
-Often a data layer variable needs setting before the event tracking is performed. The `at-ng-event-tracking-data` attribute takes an object that will be added to the data layer before event tracking is triggered.
+Often a data layer variable needs setting before the event tracking is performed. The `at-ng-event-tracking-data` attribute takes an object that will be merged to the data layer before event tracking is triggered.
 
 ```html
 <button at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':scopeValue}">Click Me</button>
@@ -173,7 +173,7 @@ Often a data layer variable needs setting before the event tracking is performed
 Manual Tracking
 ---------------
 
-The AnalyticsTrackingService may be used to manually send tracking.
+The `AnalyticsTrackingService` may be used to manually send tracking.
 
 ```js
 AnalyticsTrackingService.trackPageView('stateName');
