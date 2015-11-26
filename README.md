@@ -112,7 +112,7 @@ The pages config object describes the pages in your application along with any e
 
 If your application is using `ui-router` then page tracking, including custom dimensions, will automatically be sent for each page. The `state` field should match exactly the name given to the `ui-router` `$stateProvider` when configuring your states.
 
-Event tracking for items on the page will include the custom dimensions configured for the page as well as any configured just for the event e.g. Event 3 will be sent with custom dimensions 1, 2 and 3. The label field for event tracking may be obtained dynamically from the data layer by adding a `labelDataLayerVar` field.
+Event tracking for items on the page will include the custom dimensions configured for the page as well as any configured just for the event e.g. Event 3 will be sent with custom dimensions 1, 2 and 3. The label value for event tracking may be obtained dynamically from the data layer by adding a `labelDataLayerVar` field.
 
 #### Events Config
 
