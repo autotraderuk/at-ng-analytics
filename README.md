@@ -162,10 +162,20 @@ The `at-ng-event-tracking` directive will enable click tracking on elements of y
 <button at-ng-event-tracking="labelValue">Click Me</button>
 ```
 
-The value given to the directive must match the value of the `label` field for the event in the config.
+The value given to the directive must match the value of the `label` field for the event in your config.
 
 Often a data layer variable needs setting before the event tracking is performed. The `at-ng-event-tracking-data` attribute takes an object that will be added to the data layer before event tracking is triggered.
 
 ```html
 <button at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':scopeValue}">Click Me</button>
+```
+
+Manual Tracking
+---------------
+
+The AnalyticsTrackingService may be used to manually send tracking.
+
+```js
+AnalyticsTrackingService.trackPageView('stateName');
+AnalyticsTrackingService.trackEvent('stateName', 'eventLabel');
 ```
