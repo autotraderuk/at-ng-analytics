@@ -10,7 +10,7 @@ Installation
 
 Add the following line to your `package.json` dependencies.
 
-`"at-ng-analytics": "http://nexus.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/at-ng-analytics/-/at-ng-analytics-0.2.1.tgz",`
+`"at-ng-analytics": "http://nexus.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/at-ng-analytics/-/at-ng-analytics-0.0.4.tgz",`
 
 In `index.js` (or wherever you are requiring modules) add the following line
 
