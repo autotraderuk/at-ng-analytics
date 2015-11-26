@@ -141,3 +141,31 @@ The events config object describes any global events you are tracking.
 ```
 
 Some events aren't limited to a single page (e.g. menu bar click events) so can be configured here. When these events are tracked they will include the custom dimensions for the current page as well as any configured just for the event.
+
+Data Layer
+----------
+
+Values can be put into the the data layer using the AnalyticsDataLayerService.
+
+```js
+AnalyticsDataLayerService.setVar('dimensionVar', 'dimensionValue');
+```
+
+The best place to set variables that will be used in page tracking is in the init method of your controllers as these will be resolved before page tracking is triggered.
+
+Event Tracking
+--------------
+
+The `at-ng-event-tracking` directive will enable click tracking on elements of your page.
+
+```html
+<button at-ng-event-tracking="labelValue">Click Me</button>
+```
+
+The value given to the directive must match the value of the `label` field for the event in the config.
+
+Often a data layer variable needs setting before the event tracking is performed. The `at-ng-event-tracking-data` attribute takes an object that will be added to the data layer before event tracking is triggered.
+
+```html
+<button at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':scopeValue}">Click Me</button>
+```
