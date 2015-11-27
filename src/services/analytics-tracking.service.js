@@ -48,7 +48,10 @@
       var customDimensions = {};
       customDimensionIds.forEach(function(id) {
         var dimension = findDimension(customDimensionsConfig, id);
-        customDimensions[('dimension' + id)] = (dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar)).toString();
+        var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar);
+        if (dimensionValue) {
+          customDimensions[('dimension' + id)] = dimensionValue.toString();
+        }
       });
       return customDimensions;
     }
