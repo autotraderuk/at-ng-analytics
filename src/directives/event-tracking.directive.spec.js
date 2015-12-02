@@ -52,6 +52,27 @@
         expect(AnalyticsDataLayerService.setVar).toHaveBeenCalledWith('dimensionVar', 'dimensionValue');
         expect(AnalyticsTrackingService.trackEvent).toHaveBeenCalledWith('a', 'labelValue');
       });
+
+      it('should track event before other click handlers are resolved', function() {
+        // given
+        testComponents.$scope.dimensionValueInScope = 'dimensionValue';
+        testComponents.$scope.changer = function() {
+          testComponents.$scope.dimensionValueInScope = 'changed';
+        };
+        var element = angular.element('<button ng-click="changer()" at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':dimensionValueInScope}"></button>');
+        $state.current.name = 'a';
+        spyOn(AnalyticsDataLayerService, 'setVar');
+        spyOn(AnalyticsTrackingService, 'trackEvent');
+
+        // when
+        var compiled = $compile(element)(testComponents.$scope);
+        testComponents.$scope.$apply();
+        compiled.triggerHandler('click');
+
+        // then
+        expect(AnalyticsDataLayerService.setVar).toHaveBeenCalledWith('dimensionVar', 'dimensionValue');
+        expect(AnalyticsTrackingService.trackEvent).toHaveBeenCalledWith('a', 'labelValue');
+      });
     });
   });
 }());

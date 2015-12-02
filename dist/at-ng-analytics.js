@@ -1990,22 +1990,25 @@ function extend() {
   /* @ngInject */
   function EventTrackingDirective($state, AnalyticsTrackingService, AnalyticsDataLayerService) {
     return {
+      priority: 100,
       scope: {
         eventTrackingData: '=atNgEventTrackingData'
       },
-      link: function(scope, element, attrs) {
-        var stateName = $state.current.name;
-        element.bind('click', function() {
-          var extraData = scope.eventTrackingData;
-          if (extraData) {
-            for (var property in extraData) {
-              if (extraData.hasOwnProperty(property)) {
-                AnalyticsDataLayerService.setVar(property, extraData[property]);
+      link: {
+        pre: function (scope, element, attrs) {
+          var stateName = $state.current.name;
+          element.bind('click', function () {
+            var extraData = scope.eventTrackingData;
+            if (extraData) {
+              for (var property in extraData) {
+                if (extraData.hasOwnProperty(property)) {
+                  AnalyticsDataLayerService.setVar(property, extraData[property]);
+                }
               }
             }
-          }
-          AnalyticsTrackingService.trackEvent(stateName, attrs.atNgEventTracking);
-        });
+            AnalyticsTrackingService.trackEvent(stateName, attrs.atNgEventTracking);
+          });
+        }
       },
       restrict: 'A'
     };
@@ -2014,7 +2017,6 @@ function extend() {
   analyticsModule.directive('atNgEventTracking', EventTrackingDirective);
   module.exports = EventTrackingDirective;
 }());
-
 },{"../analytics.module":15}],20:[function(require,module,exports){
 (function() {
   'use strict';
