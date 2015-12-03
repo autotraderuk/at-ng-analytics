@@ -1997,16 +1997,19 @@ function extend() {
       link: {
         pre: function (scope, element, attrs) {
           var stateName = $state.current.name;
-          element.bind('click', function () {
-            var extraData = scope.eventTrackingData;
-            if (extraData) {
-              for (var property in extraData) {
-                if (extraData.hasOwnProperty(property)) {
-                  AnalyticsDataLayerService.setVar(property, extraData[property]);
+          element.bind('click', function (event) {
+            if (!event.target.trackingHandled) {
+              event.target.trackingHandled = true;
+              var extraData = scope.eventTrackingData;
+              if (extraData) {
+                for (var property in extraData) {
+                  if (extraData.hasOwnProperty(property)) {
+                    AnalyticsDataLayerService.setVar(property, extraData[property]);
+                  }
                 }
               }
+              AnalyticsTrackingService.trackEvent(stateName, attrs.atNgEventTracking);
             }
-            AnalyticsTrackingService.trackEvent(stateName, attrs.atNgEventTracking);
           });
         }
       },
