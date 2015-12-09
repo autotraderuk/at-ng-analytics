@@ -81,12 +81,12 @@ The pages config object describes the pages in your application along with any e
   {
     "name": "Page 1",
     "state": "pg1",
-    "customDimensions": [1, 2]
+    "customDimensions": ["Dimension 1", "Dimension 2"]
   },
   {
     "name": "Page 2",
     "state": "pg2",
-    "customDimensions": [1, 2],
+    "customDimensions": ["Dimension 1", "Dimension 2"],
     "events": [
       {
         "name": "Event 1",
@@ -103,7 +103,7 @@ The pages config object describes the pages in your application along with any e
         "name": "Event 3",
         "category": "standard-link",
         "label": "event3",
-        "customDimensions": [3]
+        "customDimensions": ["Dimension 3"]
       }
     ]
   }
@@ -135,7 +135,7 @@ The events config object describes any global events you are tracking.
     "name": "Event 3",
     "category": "standard-link",
     "label": "event3",
-    "customDimensions": [3]
+    "customDimensions": ["Dimension 3"]
   }
 ]
 ```
