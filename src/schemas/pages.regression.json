@@ -6,7 +6,7 @@
   {
     "name": "Page 2",
     "state": "pg2",
-    "customDimensions": [1, 2]
+    "customDimensions": ["Dimension 1", "Dimension 2"]
   },
   {
     "name": "Page 3",
@@ -27,7 +27,7 @@
         "name": "Event 3",
         "category": "standard-link",
         "label": "event3",
-        "customDimensions": [3]
+        "customDimensions": ["Dimension 3"]
       }
     ]
   }

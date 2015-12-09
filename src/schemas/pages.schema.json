@@ -15,7 +15,7 @@
       "customDimensions": {
         "type": "array",
         "items": {
-          "type": "integer"
+          "type": "string"
         }
       },
       "events": {
@@ -38,7 +38,7 @@
             "customDimensions": {
               "type": "array",
               "items": {
-                "type": "integer"
+                "type": "string"
               }
             }
           },
