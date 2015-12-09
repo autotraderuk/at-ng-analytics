@@ -16,7 +16,7 @@
 
       var page = findPage(pagesConfig, stateName);
 
-      var customDimensions = getCustomDimensionsFromIds(page.customDimensions);
+      var customDimensions = getCustomDimensionsFromNames(page.customDimensions);
       $analytics.setUserProperties(customDimensions);
       $analytics.pageTrack(window.location.hash);
     }
@@ -25,12 +25,12 @@
       var eventVariables = {};
 
       var page = findPage(AnalyticsConfigService.getPages(), stateName);
-      var pageCustomDimensions = getCustomDimensionsFromIds(page.customDimensions);
+      var pageCustomDimensions = getCustomDimensionsFromNames(page.customDimensions);
       angular.extend(eventVariables, pageCustomDimensions);
 
       var event = findEvent(page.events, eventLabel) || findEvent(AnalyticsConfigService.getEvents(), eventLabel);
       if (event.customDimensions) {
-        var eventCustomDimensions = getCustomDimensionsFromIds(event.customDimensions);
+        var eventCustomDimensions = getCustomDimensionsFromNames(event.customDimensions);
         angular.extend(eventVariables, eventCustomDimensions);
       }
 
@@ -43,14 +43,14 @@
       $analytics.eventTrack(eventVariables.action, eventVariables);
     }
 
-    function getCustomDimensionsFromIds(customDimensionIds) {
+    function getCustomDimensionsFromNames(customDimensionNames) {
       var customDimensionsConfig = AnalyticsConfigService.getCustomDimensions();
       var customDimensions = {};
-      customDimensionIds.forEach(function(id) {
-        var dimension = findDimension(customDimensionsConfig, id);
+      customDimensionNames.forEach(function(name) {
+        var dimension = findDimension(customDimensionsConfig, name);
         var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar);
         if (dimensionValue) {
-          customDimensions[('dimension' + id)] = dimensionValue.toString();
+          customDimensions[('dimension' + dimension.id)] = dimensionValue.toString();
         }
       });
       return customDimensions;
@@ -61,8 +61,8 @@
     return findConfigItem(pages, 'state', state);
   }
 
-  function findDimension(dimensions, id) {
-    return findConfigItem(dimensions, 'id', id);
+  function findDimension(dimensions, name) {
+    return findConfigItem(dimensions, 'name', name);
   }
 
   function findEvent(events, eventLabel) {

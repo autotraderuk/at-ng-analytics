@@ -45,7 +45,7 @@
             {
               "name": "Page B",
               "state": "b",
-              "customDimensions": [4, 5]
+              "customDimensions": ['Dimension 4', 'Dimension 5']
             }
           ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
@@ -67,7 +67,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [6]
+            "customDimensions": ['Dimension 6']
           }
         ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
@@ -91,7 +91,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [6]
+            "customDimensions": ['Dimension 6']
           }
         ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
@@ -118,7 +118,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [4, 5],
+            "customDimensions": ['Dimension 4', 'Dimension 5'],
             "events": [
               {
                 "name": "An Event",
@@ -145,7 +145,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [6],
+            "customDimensions": ['Dimension 6'],
             "events": [
               {
                 "name": "An Event",
@@ -173,13 +173,13 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [4],
+            "customDimensions": ['Dimension 4'],
             "events": [
               {
                 "name": "An Event",
                 "category": "link",
                 "label": "event1",
-                "customDimensions": [5]
+                "customDimensions": ['Dimension 5']
               }
             ]
 
@@ -201,13 +201,13 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [4],
+            "customDimensions": ['Dimension 4'],
             "events": [
               {
                 "name": "An Event",
                 "category": "link",
                 "label": "event1",
-                "customDimensions": [6]
+                "customDimensions": ['Dimension 6']
               }
             ]
           }
@@ -230,7 +230,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [4],
+            "customDimensions": ['Dimension 4'],
             "events": [
               {
                 "name": "An Event",
@@ -259,7 +259,7 @@
           {
             "name": "Page B",
             "state": "b",
-            "customDimensions": [4]
+            "customDimensions": ['Dimension 4']
 
           }
         ]);
@@ -268,7 +268,7 @@
             "name": "An Event",
             "category": "link",
             "label": "event1",
-            "customDimensions": [5]
+            "customDimensions": ['Dimension 5']
           }
         ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
