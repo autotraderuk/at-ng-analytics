@@ -85,6 +85,31 @@
         expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
       });
 
+      it('should set custom dimension from data layer defaults', function(){
+        //given
+        spyOn(AnalyticsConfigService, 'getPages').and.returnValue([
+          {
+            "name": "Page B",
+            "state": "b",
+            "customDimensions": ['Dimension 6'],
+            "dataLayerDefaults": {"dimensionVar": "value6"}
+          }
+        ]);
+        spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
+        spyOn(AnalyticsDataLayerService, 'getVar').and.returnValue(undefined);
+        spyOn($analytics, 'setUserProperties');
+        spyOn($analytics, 'pageTrack');
+        window.location.hash = 'trackedHash';
+
+        //when
+        AnalyticsTrackingService.trackPageView('b');
+
+        //then
+        expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
+        expect($analytics.setUserProperties).toHaveBeenCalledWith({ dimension6: 'value6' });
+        expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
+      });
+
       it('should not set custom dimension if it cant be found in data layer', function(){
         //given
         spyOn(AnalyticsConfigService, 'getPages').and.returnValue([
@@ -214,6 +239,36 @@
         ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
         spyOn(AnalyticsDataLayerService, 'getVar').and.returnValue('value6');
+        spyOn($analytics, 'eventTrack');
+
+        //when
+        AnalyticsTrackingService.trackEvent('b', 'event1');
+
+        //then
+        expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension6: 'value6', category: 'link', action: 'click', label: 'event1' });
+      });
+
+      it('should set event custom dimension from data layer defaults', function(){
+        //given
+        spyOn(AnalyticsConfigService, 'getPages').and.returnValue([
+          {
+            "name": "Page B",
+            "state": "b",
+            "customDimensions": ['Dimension 4'],
+            "dataLayerDefaults": {"dimensionVar": "value6"},
+            "events": [
+              {
+                "name": "An Event",
+                "category": "link",
+                "label": "event1",
+                "customDimensions": ['Dimension 6']
+              }
+            ]
+          }
+        ]);
+        spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
+        spyOn(AnalyticsDataLayerService, 'getVar').and.returnValue(undefined);
         spyOn($analytics, 'eventTrack');
 
         //when

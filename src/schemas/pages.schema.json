@@ -18,6 +18,9 @@
           "type": "string"
         }
       },
+      "dataLayerDefaults": {
+        "type": "object"
+      },
       "events": {
         "type": "array",
         "items": {

@@ -16,7 +16,7 @@
 
       var page = findPage(pagesConfig, stateName);
 
-      var customDimensions = getCustomDimensionsFromNames(page.customDimensions);
+      var customDimensions = buildCustomDimensions(page, page.customDimensions);
       $analytics.setUserProperties(customDimensions);
       $analytics.pageTrack(window.location.hash);
     }
@@ -25,12 +25,12 @@
       var eventVariables = {};
 
       var page = findPage(AnalyticsConfigService.getPages(), stateName);
-      var pageCustomDimensions = getCustomDimensionsFromNames(page.customDimensions);
+      var pageCustomDimensions = buildCustomDimensions(page, page.customDimensions);
       angular.extend(eventVariables, pageCustomDimensions);
 
       var event = findEvent(page.events, eventLabel) || findEvent(AnalyticsConfigService.getEvents(), eventLabel);
       if (event.customDimensions) {
-        var eventCustomDimensions = getCustomDimensionsFromNames(event.customDimensions);
+        var eventCustomDimensions = buildCustomDimensions(page, event.customDimensions);
         angular.extend(eventVariables, eventCustomDimensions);
       }
 
@@ -43,12 +43,12 @@
       $analytics.eventTrack(eventVariables.action, eventVariables);
     }
 
-    function getCustomDimensionsFromNames(customDimensionNames) {
+    function buildCustomDimensions(page, customDimensionNames) {
       var customDimensionsConfig = AnalyticsConfigService.getCustomDimensions();
       var customDimensions = {};
       customDimensionNames.forEach(function(name) {
         var dimension = findDimension(customDimensionsConfig, name);
-        var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar);
+        var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar) || (page.dataLayerDefaults ? page.dataLayerDefaults[dimension.dataLayerVar] : undefined);
         if (dimensionValue) {
           customDimensions[('dimension' + dimension.id)] = dimensionValue.toString();
         }

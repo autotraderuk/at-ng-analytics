@@ -4,7 +4,7 @@
   var analyticsModule = require('../analytics.module');
 
   /* @ngInject */
-  function AnalyticsDataLayerService(AnalyticsProperties, $state) {
+  function AnalyticsDataLayerService() {
     var data = {};
     var service = {
       getVar: getVar,

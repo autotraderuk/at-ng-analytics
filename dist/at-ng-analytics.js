@@ -1939,8 +1939,7 @@ function extend() {
   /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
-      validateConfiguration: true,
-      useStateAsPrimaryDataLayer: false
+      validateConfiguration: true
     };
     return factory;
   }
@@ -2114,7 +2113,7 @@ module.exports={
       "customDimensions": {
         "type": "array",
         "items": {
-          "type": "integer"
+          "type": "string"
         }
       }
     },
@@ -2145,8 +2144,11 @@ module.exports={
       "customDimensions": {
         "type": "array",
         "items": {
-          "type": "integer"
+          "type": "string"
         }
+      },
+      "dataLayerDefaults": {
+        "type": "object"
       },
       "events": {
         "type": "array",
@@ -2168,7 +2170,7 @@ module.exports={
             "customDimensions": {
               "type": "array",
               "items": {
-                "type": "integer"
+                "type": "string"
               }
             }
           },
@@ -2218,6 +2220,7 @@ module.exports={
         if (!customDimensionsValidator(config)) {
           throw new Error(customDimensionsValidator.errors);
         }
+        checkUniqueness(config, 'name', 'Custom Dimension names are not unique');
       }
       customDimensions = config;
     }
@@ -2228,6 +2231,7 @@ module.exports={
         if (!eventsValidator(config)) {
           throw new Error(eventsValidator.errors);
         }
+        checkUniqueness(config, 'label', 'Event labels are not unique');
       }
       events = config;
     }
@@ -2238,8 +2242,25 @@ module.exports={
         if (!pagesValidator(config)) {
           throw new Error(pagesValidator.errors);
         }
+        checkUniqueness(config, 'state', 'Page states are not unique');
+        for (var i = 0; i < config.length; i++) {
+          if (config[i].events) {
+            checkUniqueness(config[i].events, 'label', 'Event labels are not unique');
+          }
+        }
       }
       pages = config;
+    }
+
+    function checkUniqueness(objectArray, property, message) {
+      var collector = [];
+      for (var i = 0; i < objectArray.length; i++) {
+        var value = objectArray[i][property];
+        if (collector.indexOf(value) > -1) {
+          throw new Error(message);
+        }
+        collector.push(value);
+      }
     }
   }
   AnalyticsConfigService.$inject = ["AnalyticsProperties"];
@@ -2255,7 +2276,7 @@ module.exports={
   var analyticsModule = require('../analytics.module');
 
   /* @ngInject */
-  function AnalyticsDataLayerService(AnalyticsProperties, $state) {
+  function AnalyticsDataLayerService() {
     var data = {};
     var service = {
       getVar: getVar,
@@ -2264,9 +2285,6 @@ module.exports={
     return service;
 
     function getVar(id) {
-      if (AnalyticsProperties.useStateAsPrimaryDataLayer) {
-        return $state.current[id] || data[id];
-      }
       return data[id];
     }
 
@@ -2274,7 +2292,6 @@ module.exports={
       data[id] = value;
     }
   }
-  AnalyticsDataLayerService.$inject = ["AnalyticsProperties", "$state"];
 
   analyticsModule.service('AnalyticsDataLayerService', AnalyticsDataLayerService);
   module.exports = AnalyticsDataLayerService;
@@ -2299,7 +2316,7 @@ module.exports={
 
       var page = findPage(pagesConfig, stateName);
 
-      var customDimensions = getCustomDimensionsFromIds(page.customDimensions);
+      var customDimensions = buildCustomDimensions(page, page.customDimensions);
       $analytics.setUserProperties(customDimensions);
       $analytics.pageTrack(window.location.hash);
     }
@@ -2308,12 +2325,12 @@ module.exports={
       var eventVariables = {};
 
       var page = findPage(AnalyticsConfigService.getPages(), stateName);
-      var pageCustomDimensions = getCustomDimensionsFromIds(page.customDimensions);
+      var pageCustomDimensions = buildCustomDimensions(page, page.customDimensions);
       angular.extend(eventVariables, pageCustomDimensions);
 
       var event = findEvent(page.events, eventLabel) || findEvent(AnalyticsConfigService.getEvents(), eventLabel);
       if (event.customDimensions) {
-        var eventCustomDimensions = getCustomDimensionsFromIds(event.customDimensions);
+        var eventCustomDimensions = buildCustomDimensions(page, event.customDimensions);
         angular.extend(eventVariables, eventCustomDimensions);
       }
 
@@ -2326,14 +2343,14 @@ module.exports={
       $analytics.eventTrack(eventVariables.action, eventVariables);
     }
 
-    function getCustomDimensionsFromIds(customDimensionIds) {
+    function buildCustomDimensions(page, customDimensionNames) {
       var customDimensionsConfig = AnalyticsConfigService.getCustomDimensions();
       var customDimensions = {};
-      customDimensionIds.forEach(function(id) {
-        var dimension = findDimension(customDimensionsConfig, id);
-        var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar);
+      customDimensionNames.forEach(function(name) {
+        var dimension = findDimension(customDimensionsConfig, name);
+        var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar) || (page.dataLayerDefaults ? page.dataLayerDefaults[dimension.dataLayerVar] : undefined);
         if (dimensionValue) {
-          customDimensions[('dimension' + id)] = dimensionValue.toString();
+          customDimensions[('dimension' + dimension.id)] = dimensionValue.toString();
         }
       });
       return customDimensions;
@@ -2345,8 +2362,8 @@ module.exports={
     return findConfigItem(pages, 'state', state);
   }
 
-  function findDimension(dimensions, id) {
-    return findConfigItem(dimensions, 'id', id);
+  function findDimension(dimensions, name) {
+    return findConfigItem(dimensions, 'name', name);
   }
 
   function findEvent(events, eventLabel) {
