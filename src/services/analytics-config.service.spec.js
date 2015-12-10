@@ -39,7 +39,7 @@
           var regression = {not:'matching'};
 
           //then
-          expect(function(){AnalyticsConfigService.registerCustomDimensions(regression)}).toThrow(new Error([{"field":"data","message":"is the wrong type"}]));
+          expect(function(){AnalyticsConfigService.registerCustomDimensions(regression)}).toThrow(new Error("[{\"field\":\"data\",\"message\":\"is the wrong type\"}]"));
         });
       });
 
@@ -60,7 +60,7 @@
           var regression = {not:'matching'};
 
           //then
-          expect(function(){AnalyticsConfigService.registerEvents(regression)}).toThrow(new Error([{"field":"data","message":"is the wrong type"}]));
+          expect(function(){AnalyticsConfigService.registerEvents(regression)}).toThrow(new Error("[{\"field\":\"data\",\"message\":\"is the wrong type\"}]"));
         });
       });
 
@@ -81,7 +81,7 @@
           var regression = {not:'matching'};
 
           //then
-          expect(function(){AnalyticsConfigService.registerPages(regression)}).toThrow(new Error([{"field":"data","message":"is the wrong type"}]));
+          expect(function(){AnalyticsConfigService.registerPages(regression)}).toThrow(new Error("[{\"field\":\"data\",\"message\":\"is the wrong type\"}]"));
         });
       });
     });
