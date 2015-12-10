@@ -92,7 +92,7 @@
             "name": "Page B",
             "state": "b",
             "customDimensions": ['Dimension 6'],
-            "dataLayerDefaults": {"dimensionVar": "value6"}
+            "defaultDataLayerValues": {"dimensionVar": "value6"}
           }
         ]);
         spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
@@ -256,7 +256,7 @@
             "name": "Page B",
             "state": "b",
             "customDimensions": ['Dimension 4'],
-            "dataLayerDefaults": {"dimensionVar": "value6"},
+            "defaultDataLayerValues": {"dimensionVar": "value6"},
             "events": [
               {
                 "name": "An Event",
