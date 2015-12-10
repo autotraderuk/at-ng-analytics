@@ -2218,7 +2218,7 @@ module.exports={
       if (AnalyticsProperties.validateConfiguration) {
         var customDimensionsValidator = validator(require('../schemas/custom-dimensions.schema'));
         if (!customDimensionsValidator(config)) {
-          throw new Error(customDimensionsValidator.errors);
+          throw new Error(JSON.stringify(customDimensionsValidator.errors));
         }
         checkUniqueness(config, 'name', 'Custom Dimension names are not unique');
       }
@@ -2229,7 +2229,7 @@ module.exports={
       if (AnalyticsProperties.validateConfiguration) {
         var eventsValidator = validator(require('../schemas/events.schema'));
         if (!eventsValidator(config)) {
-          throw new Error(eventsValidator.errors);
+          throw new Error(JSON.stringify(eventsValidator.errors));
         }
         checkUniqueness(config, 'label', 'Event labels are not unique');
       }
@@ -2240,7 +2240,7 @@ module.exports={
       if (AnalyticsProperties.validateConfiguration) {
         var pagesValidator = validator(require('../schemas/pages.schema'));
         if (!pagesValidator(config)) {
-          throw new Error(pagesValidator.errors);
+          throw new Error(JSON.stringify(pagesValidator.errors));
         }
         checkUniqueness(config, 'state', 'Page states are not unique');
         for (var i = 0; i < config.length; i++) {
