@@ -26,6 +26,7 @@
         if (!customDimensionsValidator(config)) {
           throw new Error(customDimensionsValidator.errors);
         }
+        checkUniqueness(config, 'name', 'Custom Dimension names are not unique');
       }
       customDimensions = config;
     }
@@ -36,6 +37,7 @@
         if (!eventsValidator(config)) {
           throw new Error(eventsValidator.errors);
         }
+        checkUniqueness(config, 'label', 'Event labels are not unique');
       }
       events = config;
     }
@@ -46,8 +48,25 @@
         if (!pagesValidator(config)) {
           throw new Error(pagesValidator.errors);
         }
+        checkUniqueness(config, 'state', 'Page states are not unique');
+        for (var i = 0; i < config.length; i++) {
+          if (config[i].events) {
+            checkUniqueness(config[i].events, 'label', 'Event labels are not unique');
+          }
+        }
       }
       pages = config;
+    }
+
+    function checkUniqueness(objectArray, property, message) {
+      var collector = [];
+      for (var i = 0; i < objectArray.length; i++) {
+        var value = objectArray[i][property];
+        if (collector.indexOf(value) > -1) {
+          throw new Error(message);
+        }
+        collector.push(value);
+      }
     }
   }
 
