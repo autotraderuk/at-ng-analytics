@@ -6,8 +6,7 @@
   /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
-      validateConfiguration: true,
-      useStateAsPrimaryDataLayer: false
+      validateConfiguration: true
     };
     return factory;
   }

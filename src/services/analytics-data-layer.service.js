@@ -13,9 +13,6 @@
     return service;
 
     function getVar(id) {
-      if (AnalyticsProperties.useStateAsPrimaryDataLayer) {
-        return $state.current[id] || data[id];
-      }
       return data[id];
     }
 

@@ -18,52 +18,15 @@
       $state = testComponents.service('$state');
     });
 
-    describe('state as primary data layer off', function () {
+    it('AnalyticsDataLayerService should return value from own data', function(){
+      //given
+      AnalyticsDataLayerService.setVar('variableId','testValue');
 
-      beforeEach(function() {
-        AnalyticsProperties.useStateAsPrimaryDataLayer = false;
-      });
+      //when
+      var result = AnalyticsDataLayerService.getVar("variableId");
 
-      it('AnalyticsDataLayerService should return value from own data', function(){
-        //given
-        AnalyticsDataLayerService.setVar('variableId','testValue');
-
-        //when
-        var result = AnalyticsDataLayerService.getVar("variableId");
-
-        //then
-        expect(result).toBe('testValue');
-      });
-    });
-
-    describe('state as primary data layer on', function () {
-
-      beforeEach(function() {
-        AnalyticsProperties.useStateAsPrimaryDataLayer = true;
-      });
-
-      it('AnalyticsDataLayerService should return value from own data', function(){
-        //given
-        AnalyticsDataLayerService.setVar('variableId','testValue');
-
-        //when
-        var result = AnalyticsDataLayerService.getVar("variableId");
-
-        //then
-        expect(result).toBe('testValue');
-      });
-
-      it('AnalyticsDataLayerService should return value from state data', function(){
-        //given
-        AnalyticsDataLayerService.setVar('variableId','otherValue');
-        $state.current = {variableId:'testValue'};
-
-        //when
-        var result = AnalyticsDataLayerService.getVar("variableId");
-
-        //then
-        expect(result).toBe('testValue');
-      });
+      //then
+      expect(result).toBe('testValue');
     });
   });
 }());
