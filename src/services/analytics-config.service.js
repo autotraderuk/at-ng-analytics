@@ -2,7 +2,7 @@
   'use strict';
 
   var analyticsModule = require('../analytics.module');
-  var validator = require('is-my-json-valid');
+  var configValidationTools = require('./config-validation-tools');
 
   /* @ngInject */
   function AnalyticsConfigService(AnalyticsProperties) {
@@ -22,51 +22,23 @@
 
     function registerCustomDimensions(config) {
       if (AnalyticsProperties.validateConfiguration) {
-        var customDimensionsValidator = validator(require('../schemas/custom-dimensions.schema'));
-        if (!customDimensionsValidator(config)) {
-          throw new Error(JSON.stringify(customDimensionsValidator.errors));
-        }
-        checkUniqueness(config, 'name', 'Custom Dimension names are not unique');
+        configValidationTools.validateCustomDimensions(config);
       }
       customDimensions = config;
     }
 
     function registerEvents(config) {
       if (AnalyticsProperties.validateConfiguration) {
-        var eventsValidator = validator(require('../schemas/events.schema'));
-        if (!eventsValidator(config)) {
-          throw new Error(JSON.stringify(eventsValidator.errors));
-        }
-        checkUniqueness(config, 'label', 'Event labels are not unique');
+        configValidationTools.validateEvents(config);
       }
       events = config;
     }
 
     function registerPages(config) {
       if (AnalyticsProperties.validateConfiguration) {
-        var pagesValidator = validator(require('../schemas/pages.schema'));
-        if (!pagesValidator(config)) {
-          throw new Error(JSON.stringify(pagesValidator.errors));
-        }
-        checkUniqueness(config, 'state', 'Page states are not unique');
-        for (var i = 0; i < config.length; i++) {
-          if (config[i].events) {
-            checkUniqueness(config[i].events, 'label', 'Event labels are not unique');
-          }
-        }
+        configValidationTools.validatePages(config);
       }
       pages = config;
-    }
-
-    function checkUniqueness(objectArray, property, message) {
-      var collector = [];
-      for (var i = 0; i < objectArray.length; i++) {
-        var value = objectArray[i][property];
-        if (collector.indexOf(value) > -1) {
-          throw new Error(message);
-        }
-        collector.push(value);
-      }
     }
   }
 
