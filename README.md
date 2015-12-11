@@ -87,6 +87,9 @@ The pages config object describes the pages in your application along with any e
     "name": "Page 2",
     "state": "pg2",
     "customDimensions": ["Dimension 1", "Dimension 2"],
+    "defaultDataLayerValues": {
+     "dimensionVar": "dimensionValue"
+    },
     "events": [
       {
         "name": "Event 1",
@@ -113,6 +116,8 @@ The pages config object describes the pages in your application along with any e
 If your application is using `ui-router` then page tracking, including custom dimensions, will automatically be sent for each page. The `state` field should match exactly the name given to the `ui-router` `$stateProvider` when configuring your states.
 
 Event tracking for items on the page will include the custom dimensions configured for the page as well as any configured just for the event e.g. Event 3 will be sent with custom dimensions 1, 2 and 3. The label value for event tracking may be obtained dynamically from the data layer by adding a `labelDataLayerVar` field.
+
+You may optionally provide a set of default values for the data layer for each page using `defaultDataLayerValues`. If the data layer doesn't hold a value for the variable when an event or page is tracked then the default will be used instead. This feature is also useful for setting data layer variables that are static per page.
 
 #### Events Config
 
