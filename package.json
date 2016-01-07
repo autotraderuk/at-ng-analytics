@@ -2,7 +2,7 @@
   "name": "at-ng-analytics",
   "description": "A library for page and event tracking with configurable custom dimensions",
   "version": "1.0.2",
-  "license": "COMMERCIAL",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.atcloud.io:AutoTrader/at-ng-analytics.git"
