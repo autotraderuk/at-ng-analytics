@@ -1,4 +1,5 @@
 # at-ng-analytics
+![travis build](https://api.travis-ci.org/autotraderuk/at-ng-analytics.svg)
 A library for page and event tracking with configurable custom dimensions.
 
 The purpose of this library is to provide a central place where you may configure the GA tracking for your application, including which custom dimensions are sent with each tracking payload.
