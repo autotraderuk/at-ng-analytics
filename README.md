@@ -8,15 +8,15 @@ If you are using ui-router then configuring at-ng-analytics will give you page t
 Installation
 ------------
 
-Add the following line to your `package.json` dependencies.
+Install with npm
 
-`"at-ng-analytics": "http://nexus.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/at-ng-analytics/-/at-ng-analytics-1.0.1.tgz",`
+`npm install -S at-ng-analytics`
 
-In `index.js` (or wherever you are requiring modules) add the following line
+Require the module in your code
 
 `require('at-ng-analytics');`
 
-In `app.module.js` (or wherever you define your app module and dependencies) add `'at.ng.analytics'` to the dependencies, e.g.
+Add `'at.ng.analytics'` to your angular app dependencies, e.g.
  
 ```js
 angular.module('my.app', [
@@ -27,7 +27,7 @@ angular.module('my.app', [
 Setup
 ------------
 
-The library accepts configuration in the form of JSON objects, which should registered using the `AnalyticsConfigService`.
+The library accepts configuration in the form of JSON objects, which should be registered using the `AnalyticsConfigService`.
 
 ```js
 AnalyticsConfigService.registerCustomDimensions(require('./my-custom-dimensions.json'));
@@ -37,11 +37,11 @@ AnalyticsConfigService.registerEvents(require('./my-events.json'));
 
 By default the configuration objects are validated against schemas upon registration. Schemas can be found here:
 
-[Custom Dimensions](src/schemas/custom-dimensions.schema.json)
+[Custom Dimensions](https://github.com/autotraderuk/at-ng-analytics/blob/master/src/schemas/custom-dimensions.schema.json)
 
-[Pages](src/schemas/pages.schema.json)
+[Pages](https://github.com/autotraderuk/at-ng-analytics/blob/master/src/schemas/pages.schema.json)
 
-[Events](src/schemas/events.schema.json)
+[Events](https://github.com/autotraderuk/at-ng-analytics/blob/master/src/schemas/events.schema.json)
 
 You can turn off this validation with the `AnalyticsProperties`.
 
