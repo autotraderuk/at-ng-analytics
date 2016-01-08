@@ -1,23 +1,19 @@
 (function() {
   'use strict';
 
-  var KarmaTestTool = require('karma-test-tool');
-
   describe('AnalyticsTrackingServiceTest', function () {
-    var AnalyticsTrackingService, $analytics, AnalyticsConfigService, AnalyticsDataLayerService, testComponents;
+    var AnalyticsTrackingService, $analytics, AnalyticsConfigService, AnalyticsDataLayerService;
 
-    beforeEach(function () {
-      testComponents = new KarmaTestTool()
-        .module('at.ng.analytics')
-        .service(['AnalyticsTrackingService', '$analytics', 'AnalyticsConfigService', 'AnalyticsDataLayerService'])
-        .withScope()
-        .build();
-
-      AnalyticsTrackingService = testComponents.service('AnalyticsTrackingService');
-      $analytics = testComponents.service('$analytics');
-      AnalyticsConfigService = testComponents.service('AnalyticsConfigService');
-      AnalyticsDataLayerService = testComponents.service('AnalyticsDataLayerService');
+    beforeEach(function() {
+      angular.mock.module('at.ng.analytics');
     });
+
+    beforeEach(inject(function (_AnalyticsTrackingService_, _AnalyticsDataLayerService_, _AnalyticsConfigService_, _$analytics_) {
+      AnalyticsTrackingService = _AnalyticsTrackingService_;
+      AnalyticsDataLayerService = _AnalyticsDataLayerService_;
+      AnalyticsConfigService = _AnalyticsConfigService_;
+      $analytics = _$analytics_;
+    }));
 
     var customDimensions = [
       {

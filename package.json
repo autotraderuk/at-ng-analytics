@@ -12,10 +12,7 @@
     "build": "mkdirp dist && browserify -t browserify-ngannotate src/index.js -o dist/at-ng-analytics.js"
   },
   "main": "src/index.js",
-  "author": "",
-  "publishConfig": {
-    "registry": "http://devnexus001.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/"
-  },
+  "author": "Thomas Inman",
   "devDependencies": {
     "angular-mocks": "1.3.20",
     "browserify": "^11.0.1",
@@ -25,7 +22,6 @@
     "karma-browserify": "^4.1.2",
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.1.4",
-    "karma-test-tool": "http://nexus.dev.dc1.tradermedia.net:8081/nexus/content/repositories/npm-internal/karma-test-tool/-/karma-test-tool-1.0.2.tgz",
     "mkdirp": "^0.5.1"
   },
   "dependencies": {

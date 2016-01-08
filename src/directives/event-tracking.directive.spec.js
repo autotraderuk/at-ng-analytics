@@ -1,23 +1,20 @@
 (function() {
   'use strict';
 
-  var KarmaTestTool = require('karma-test-tool');
-
   describe('EventTrackingDirectiveTest', function() {
-    var testComponents, $compile, $state, AnalyticsTrackingService, AnalyticsDataLayerService;
+    var $compile, $state, AnalyticsTrackingService, AnalyticsDataLayerService, $scope;
 
     beforeEach(function() {
-      testComponents = new KarmaTestTool()
-        .module('at.ng.analytics', [])
-        .service(['$compile', '$state', 'AnalyticsTrackingService', 'AnalyticsDataLayerService'])
-        .withScope()
-        .build();
-
-      $compile = testComponents.service('$compile');
-      $state = testComponents.service('$state');
-      AnalyticsTrackingService = testComponents.service('AnalyticsTrackingService');
-      AnalyticsDataLayerService = testComponents.service('AnalyticsDataLayerService');
+      angular.mock.module('at.ng.analytics');
     });
+
+    beforeEach(inject(function (_AnalyticsTrackingService_, _AnalyticsDataLayerService_, _AnalyticsConfigService_, _$compile_, _$state_, _$rootScope_) {
+      AnalyticsTrackingService = _AnalyticsTrackingService_;
+      AnalyticsDataLayerService = _AnalyticsDataLayerService_;
+      $compile = _$compile_;
+      $state = _$state_;
+      $scope = _$rootScope_.$new();
+    }));
 
     describe('Event tracking', function() {
       it('should track event with the label from element', function() {
@@ -27,8 +24,8 @@
         spyOn(AnalyticsTrackingService, 'trackEvent');
 
         // when
-        var compiled = $compile(element)(testComponents.$scope);
-        testComponents.$scope.$apply();
+        var compiled = $compile(element)($scope);
+        $scope.$apply();
         compiled.triggerHandler('click');
 
         // then
@@ -37,15 +34,15 @@
 
       it('should set custom dimensions provided in attribute', function() {
         // given
-        testComponents.$scope.dimensionValueInScope = 'dimensionValue';
+        $scope.dimensionValueInScope = 'dimensionValue';
         var element = angular.element('<button at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':dimensionValueInScope}"></button>');
         $state.current.name = 'a';
         spyOn(AnalyticsDataLayerService, 'setVar');
         spyOn(AnalyticsTrackingService, 'trackEvent');
 
         // when
-        var compiled = $compile(element)(testComponents.$scope);
-        testComponents.$scope.$apply();
+        var compiled = $compile(element)($scope);
+        $scope.$apply();
         compiled.triggerHandler('click');
 
         // then
@@ -55,9 +52,9 @@
 
       it('should track event before other click handlers are resolved', function() {
         // given
-        testComponents.$scope.dimensionValueInScope = 'dimensionValue';
-        testComponents.$scope.changer = function() {
-          testComponents.$scope.dimensionValueInScope = 'changed';
+        $scope.dimensionValueInScope = 'dimensionValue';
+        $scope.changer = function() {
+          $scope.dimensionValueInScope = 'changed';
         };
         var element = angular.element('<button ng-click="changer()" at-ng-event-tracking="labelValue" at-ng-event-tracking-data="{\'dimensionVar\':dimensionValueInScope}"></button>');
         $state.current.name = 'a';
@@ -65,8 +62,8 @@
         spyOn(AnalyticsTrackingService, 'trackEvent');
 
         // when
-        var compiled = $compile(element)(testComponents.$scope);
-        testComponents.$scope.$apply();
+        var compiled = $compile(element)($scope);
+        $scope.$apply();
         compiled.triggerHandler('click');
 
         // then

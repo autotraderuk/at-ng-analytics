@@ -1,22 +1,18 @@
 (function() {
   'use strict';
 
-  var KarmaTestTool = require('karma-test-tool');
-
   describe('AnalyticsDataLayerServiceTest', function () {
-    var AnalyticsDataLayerService, AnalyticsProperties, $state, testComponents;
+    var AnalyticsDataLayerService, AnalyticsProperties, $state;
 
-    beforeEach(function () {
-      testComponents = new KarmaTestTool()
-        .module('at.ng.analytics')
-        .service(['AnalyticsDataLayerService', 'AnalyticsProperties', '$state'])
-        .withScope()
-        .build();
-
-      AnalyticsDataLayerService = testComponents.service('AnalyticsDataLayerService');
-      AnalyticsProperties = testComponents.service('AnalyticsProperties');
-      $state = testComponents.service('$state');
+    beforeEach(function() {
+      angular.mock.module('at.ng.analytics');
     });
+
+    beforeEach(inject(function (_AnalyticsDataLayerService_, _AnalyticsProperties_, _$state_) {
+      AnalyticsDataLayerService = _AnalyticsDataLayerService_;
+      AnalyticsProperties = _AnalyticsProperties_;
+      $state = _$state_;
+    }));
 
     it('AnalyticsDataLayerService should return value from own data', function(){
       //given

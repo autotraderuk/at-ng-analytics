@@ -1,21 +1,17 @@
 (function() {
   'use strict';
 
-  var KarmaTestTool = require('karma-test-tool');
-
   describe('AnalyticsConfigServiceTest', function () {
-    var AnalyticsConfigService, AnalyticsProperties, testComponents;
+    var AnalyticsConfigService, AnalyticsProperties;
 
-    beforeEach(function () {
-      testComponents = new KarmaTestTool()
-        .module('at.ng.analytics')
-        .service(['AnalyticsConfigService', 'AnalyticsProperties'])
-        .withScope()
-        .build();
-
-      AnalyticsConfigService = testComponents.service('AnalyticsConfigService');
-      AnalyticsProperties = testComponents.service('AnalyticsProperties');
+    beforeEach(function() {
+      angular.mock.module('at.ng.analytics');
     });
+
+    beforeEach(inject(function (_AnalyticsConfigService_, _AnalyticsProperties_) {
+      AnalyticsConfigService = _AnalyticsConfigService_;
+      AnalyticsProperties = _AnalyticsProperties_;
+    }));
 
     describe('config validation on', function() {
       beforeEach(function () {
