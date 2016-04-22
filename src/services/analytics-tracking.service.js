@@ -4,7 +4,7 @@
   var analyticsModule = require('../analytics.module');
 
   /* @ngInject */
-  function AnalyticsTrackingService($analytics, AnalyticsConfigService, AnalyticsDataLayerService) {
+  function AnalyticsTrackingService($analytics, AnalyticsProperties, AnalyticsConfigService, AnalyticsDataLayerService) {
     var service = {
       trackPageView: trackPageView,
       trackEvent: trackEvent
@@ -50,7 +50,10 @@
         var dimension = findDimension(customDimensionsConfig, name);
         var dimensionValue = dimension.value || AnalyticsDataLayerService.getVar(dimension.dataLayerVar) || (page.defaultDataLayerValues ? page.defaultDataLayerValues[dimension.dataLayerVar] : undefined);
         if (dimensionValue) {
-          customDimensions[('dimension' + dimension.id)] = dimensionValue.toString();
+          customDimensions[name] = dimensionValue.toString();
+          if(AnalyticsProperties.includeIndexIdentifiedCustomDimensions){
+            customDimensions[('dimension' + dimension.id)] = dimensionValue.toString();
+          }
         }
       });
       return customDimensions;

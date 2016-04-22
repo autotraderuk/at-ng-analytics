@@ -6,7 +6,8 @@
   /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
-      validateConfiguration: true
+      validateConfiguration: true,
+      includeIndexIdentifiedCustomDimensions: false
     };
     return factory;
   }

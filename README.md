@@ -3,9 +3,11 @@
 
 A library for page and event tracking with configurable custom dimensions.
 
-The purpose of this library is to provide a central place where you may configure the GA tracking for your application, including which custom dimensions are sent with each tracking payload.
+The purpose of this library is to provide a central place where you may configure the analytics for your application, including which custom dimensions are sent with each tracking payload.
 
 If you are using ui-router then configuring at-ng-analytics will give you page tracking by default. In addition event tracking is possible by adding directives to the elements on page you want to track the actions of.
+
+This library is build on top of the [angulartics project](https://github.com/angulartics/angulartics) and is intended to work with the plugins available there. See below for an example of using the Google Analytics plugin.
 
 Installation
 ------------
@@ -24,6 +26,32 @@ Add `'at.ng.analytics'` to your angular app dependencies, e.g.
 angular.module('my.app', [
   'at.ng.analytics'
 ]);
+```
+
+Google Analytics Plugin
+-----------------------
+
+Install with npm
+
+`npm install -S angulartics-google-analytics`
+
+Require the module in your code
+
+`require('angulartics-google-analytics');`
+
+Add `'angulartics.google.analytics'` to your angular app dependencies alongside `'at.ng.analytics'`, e.g.
+
+```js
+angular.module('my.app', [
+  'at.ng.analytics',
+  'angulartics.google.analytics'
+]);
+```
+
+Enable index identified custom dimensions
+
+```js
+AnalyticsProperties.includeIndexIdentifiedCustomDimensions = true;
 ```
 
 Setup
@@ -72,7 +100,9 @@ A dimension can either have a static value or a variable name, which will be use
 ]
 ```
 
-The `id` field should relate to the custom dimension id you are using in GA. So `"id" : 1` will be sent as `dimension1`.
+The name field is used as a key when passing user properties to the angulartics library so if the angulartics plugin you are using requires certain naming conventions you should bear this in mind when choosing your dimension names.
+
+If you are using the GA plugin and have enabled index identified custom dimensions the `id` field should relate to the custom dimension id you are using in GA. So `"id" : 1` will be sent as `dimension1`.
 
 #### Pages Config
 

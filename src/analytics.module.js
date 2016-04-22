@@ -3,7 +3,6 @@
 
   angular.module('at.ng.analytics', [
     'angulartics',
-    'angulartics.google.analytics',
     'ui.router'
   ]);
 

@@ -2,14 +2,15 @@
   'use strict';
 
   describe('AnalyticsTrackingServiceTest', function () {
-    var AnalyticsTrackingService, $analytics, AnalyticsConfigService, AnalyticsDataLayerService;
+    var AnalyticsTrackingService, $analytics, AnalyticsProperties, AnalyticsConfigService, AnalyticsDataLayerService;
 
     beforeEach(function() {
       angular.mock.module('at.ng.analytics');
     });
 
-    beforeEach(inject(function (_AnalyticsTrackingService_, _AnalyticsDataLayerService_, _AnalyticsConfigService_, _$analytics_) {
+    beforeEach(inject(function (_AnalyticsTrackingService_, _AnalyticsProperties_,_AnalyticsDataLayerService_, _AnalyticsConfigService_, _$analytics_) {
       AnalyticsTrackingService = _AnalyticsTrackingService_;
+      AnalyticsProperties = _AnalyticsProperties_;
       AnalyticsDataLayerService = _AnalyticsDataLayerService_;
       AnalyticsConfigService = _AnalyticsConfigService_;
       $analytics = _$analytics_;
@@ -53,7 +54,7 @@
         AnalyticsTrackingService.trackPageView('b');
 
         //then
-        expect($analytics.setUserProperties).toHaveBeenCalledWith({ dimension4: 'value4', dimension5: 'value5' });
+        expect($analytics.setUserProperties).toHaveBeenCalledWith({ 'Dimension 4': 'value4', 'Dimension 5': 'value5' });
         expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
       });
 
@@ -77,7 +78,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
-        expect($analytics.setUserProperties).toHaveBeenCalledWith({ dimension6: 'value6' });
+        expect($analytics.setUserProperties).toHaveBeenCalledWith({ 'Dimension 6': 'value6' });
         expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
       });
 
@@ -102,7 +103,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
-        expect($analytics.setUserProperties).toHaveBeenCalledWith({ dimension6: 'value6' });
+        expect($analytics.setUserProperties).toHaveBeenCalledWith({ 'Dimension 6': 'value6' });
         expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
       });
 
@@ -157,7 +158,7 @@
         AnalyticsTrackingService.trackEvent('b', 'event1');
 
         //then
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension5: 'value5', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', 'Dimension 5': 'value5', category: 'link', action: 'click', label: 'event1' });
       });
 
       it('should set page custom dimension from data layer', function(){
@@ -185,7 +186,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension6: 'value6', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 6': 'value6', category: 'link', action: 'click', label: 'event1' });
       });
 
       it('should set event custom dimension from config', function(){
@@ -213,7 +214,7 @@
         AnalyticsTrackingService.trackEvent('b', 'event1');
 
         //then
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension5: 'value5', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', 'Dimension 5': 'value5', category: 'link', action: 'click', label: 'event1' });
       });
 
       it('should set event custom dimension from data layer', function(){
@@ -242,7 +243,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension6: 'value6', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', 'Dimension 6': 'value6', category: 'link', action: 'click', label: 'event1' });
       });
 
       it('should set event custom dimension from data layer defaults', function(){
@@ -272,7 +273,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('dimensionVar');
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension6: 'value6', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', 'Dimension 6': 'value6', category: 'link', action: 'click', label: 'event1' });
       });
 
       it('should set event label from data layer', function(){
@@ -301,7 +302,7 @@
 
         //then
         expect(AnalyticsDataLayerService.getVar).toHaveBeenCalledWith('labelVar');
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', category: 'link', action: 'click', label: 'labelValue' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', category: 'link', action: 'click', label: 'labelValue' });
       });
 
       it('should get global event settings from config', function(){
@@ -329,7 +330,63 @@
         AnalyticsTrackingService.trackEvent('b', 'event1');
 
         //then
-        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { dimension4: 'value4', dimension5: 'value5', category: 'link', action: 'click', label: 'event1' });
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', 'Dimension 5': 'value5', category: 'link', action: 'click', label: 'event1' });
+      });
+    });
+
+    describe('with includeIndexIdentifiedCustomDimensions enabled', function () {
+
+      beforeEach(function(){
+        AnalyticsProperties.includeIndexIdentifiedCustomDimensions = true;
+      });
+
+      it('track page view should send index identified custom dimensions', function () {
+        //given
+        spyOn(AnalyticsConfigService, 'getPages').and.returnValue([
+          {
+            "name": "Page B",
+            "state": "b",
+            "customDimensions": ['Dimension 4']
+          }
+        ]);
+        spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
+        spyOn($analytics, 'setUserProperties');
+        spyOn($analytics, 'pageTrack');
+        window.location.hash = 'trackedHash';
+
+        //when
+        AnalyticsTrackingService.trackPageView('b');
+
+        //then
+        expect($analytics.setUserProperties).toHaveBeenCalledWith({ 'Dimension 4': 'value4', dimension4: 'value4'});
+        expect($analytics.pageTrack).toHaveBeenCalledWith('#trackedHash');
+      });
+
+      it('track event should send index identified custom dimensions', function(){
+        //given
+        spyOn(AnalyticsConfigService, 'getPages').and.returnValue([
+          {
+            "name": "Page B",
+            "state": "b",
+            "customDimensions": ['Dimension 4'],
+            "events": [
+              {
+                "name": "An Event",
+                "category": "link",
+                "label": "event1"
+              }
+            ]
+
+          }
+        ]);
+        spyOn(AnalyticsConfigService, 'getCustomDimensions').and.returnValue(customDimensions);
+        spyOn($analytics, 'eventTrack');
+
+        //when
+        AnalyticsTrackingService.trackEvent('b', 'event1');
+
+        //then
+        expect($analytics.eventTrack).toHaveBeenCalledWith('click' , { 'Dimension 4': 'value4', dimension4: 'value4', category: 'link', action: 'click', label: 'event1' });
       });
     });
   });
