@@ -1,8 +1,9 @@
 (function() {
   'use strict';
+
+  EventTrackingDirective.$inject = ["$state", "AnalyticsTrackingService", "AnalyticsDataLayerService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function EventTrackingDirective($state, AnalyticsTrackingService, AnalyticsDataLayerService) {
     return {
       priority: 100,

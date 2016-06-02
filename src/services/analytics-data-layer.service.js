@@ -3,7 +3,6 @@
 
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsDataLayerService() {
     var data = {};
     var service = {

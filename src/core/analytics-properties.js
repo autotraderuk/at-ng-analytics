@@ -3,7 +3,6 @@
 
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
       validateConfiguration: true,

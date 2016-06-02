@@ -1,10 +1,10 @@
 (function() {
   'use strict';
 
+  AnalyticsConfigService.$inject = ["AnalyticsProperties"];
   var analyticsModule = require('../analytics.module');
   var configValidationTools = require('./config-validation-tools');
 
-  /* @ngInject */
   function AnalyticsConfigService(AnalyticsProperties) {
     var customDimensions = [];
     var events = [];

@@ -1,9 +1,9 @@
 (function() {
   'use strict';
 
+  AnalyticsTrackingService.$inject = ["$analytics", "AnalyticsProperties", "AnalyticsConfigService", "AnalyticsDataLayerService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsTrackingService($analytics, AnalyticsProperties, AnalyticsConfigService, AnalyticsDataLayerService) {
     var service = {
       trackPageView: trackPageView,

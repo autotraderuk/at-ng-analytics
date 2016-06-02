@@ -1817,7 +1817,6 @@ function extend() {
 
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsProperties() {
     var factory = {
       validateConfiguration: true,
@@ -1837,12 +1836,10 @@ function extend() {
   StateEvents.$inject = ["$rootScope", "$timeout", "$state", "AnalyticsTrackingService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function DisableDefaultPageTracking($analyticsProvider) {
     $analyticsProvider.virtualPageviews(false);
   }
 
-  /* @ngInject */
   function StateEvents($rootScope, $timeout, $state, AnalyticsTrackingService) {
     $rootScope.$on('$stateChangeSuccess', function() {
       $timeout(function() {
@@ -1866,10 +1863,10 @@ function extend() {
 },{"./analytics-properties":14,"./core":15}],17:[function(require,module,exports){
 (function() {
   'use strict';
+
   EventTrackingDirective.$inject = ["$state", "AnalyticsTrackingService", "AnalyticsDataLayerService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function EventTrackingDirective($state, AnalyticsTrackingService, AnalyticsDataLayerService) {
     return {
       priority: 100,
@@ -2080,7 +2077,6 @@ module.exports={
   var analyticsModule = require('../analytics.module');
   var configValidationTools = require('./config-validation-tools');
 
-  /* @ngInject */
   function AnalyticsConfigService(AnalyticsProperties) {
     var customDimensions = [];
     var events = [];
@@ -2128,7 +2124,6 @@ module.exports={
 
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsDataLayerService() {
     var data = {};
     var service = {
@@ -2157,7 +2152,6 @@ module.exports={
   AnalyticsTrackingService.$inject = ["$analytics", "AnalyticsProperties", "AnalyticsConfigService", "AnalyticsDataLayerService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function AnalyticsTrackingService($analytics, AnalyticsProperties, AnalyticsConfigService, AnalyticsDataLayerService) {
     var service = {
       trackPageView: trackPageView,

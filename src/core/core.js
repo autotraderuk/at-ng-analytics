@@ -1,14 +1,14 @@
 (function() {
   'use strict';
 
+  DisableDefaultPageTracking.$inject = ["$analyticsProvider"];
+  StateEvents.$inject = ["$rootScope", "$timeout", "$state", "AnalyticsTrackingService"];
   var analyticsModule = require('../analytics.module');
 
-  /* @ngInject */
   function DisableDefaultPageTracking($analyticsProvider) {
     $analyticsProvider.virtualPageviews(false);
   }
 
-  /* @ngInject */
   function StateEvents($rootScope, $timeout, $state, AnalyticsTrackingService) {
     $rootScope.$on('$stateChangeSuccess', function() {
       $timeout(function() {

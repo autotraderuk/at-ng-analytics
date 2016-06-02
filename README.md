@@ -21,7 +21,7 @@ Require the module in your code
 `require('at-ng-analytics');`
 
 Add `'at.ng.analytics'` to your angular app dependencies, e.g.
- 
+
 ```js
 angular.module('my.app', [
   'at.ng.analytics'
